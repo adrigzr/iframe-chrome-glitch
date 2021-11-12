@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>IFrame Chrome Glitch</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+	    <button type="button" data-id="push">1. Push</button>
+	    <button type="button" data-id="create">2. Create iframe</button>
+	    <div data-id="wrapper"></div>
+	    <button type="button" data-id="replace">4. Replace</button>
+	    <button type="button" data-id="remove">5. Remove iframe</button>
+	    <button type="button" data-id="back">6. Back</button>
+	    <script>
+		const wrapper = document.querySelector('[data-id="wrapper"]');
+		const create = document.querySelector('button[data-id="create"]');
+
+		create.addEventListener('click', () => {
+		    const iframe = document.createElement('iframe');
+
+		    iframe.src = './a.html';
+		    iframe.style.width = '500px';
+		    iframe.style.height = '500px';
+
+		    wrapper.appendChild(iframe);
+		})
+
+		const remove = document.querySelector('button[data-id="remove"]');
+
+		remove.addEventListener('click', () => {
+		    const child = wrapper.children[0];
+
+		    if (child) {
+			wrapper.children[0].remove();
+		    }
+		})
+
+		const push = document.querySelector('button[data-id="push"]');
+
+		push.addEventListener('click', () => {
+		    console.log('Parent Push', window.history.length);
+		    window.history.pushState(null, '', '#/push');
+		})
+
+		const replace = document.querySelector('button[data-id="replace"]');
+
+		replace.addEventListener('click', () => {
+		    console.log('Parent Replace', window.history.length);
+		    window.history.replaceState(null, '', '#/replace');
+		})
+
+		const back = document.querySelector('button[data-id="back"]');
+
+		back.addEventListener('click', () => {
+		    console.log('Parent Back', window.history.length);
+		    window.history.back();
+		})
+	    </script>
+	</body>
+</html>
